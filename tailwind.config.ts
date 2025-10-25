@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import plugin from "tailwindcss/plugin";
 
 export default {
 	darkMode: ["class"],
@@ -8,7 +9,7 @@ export default {
 		"./app/**/*.{ts,tsx}",
 		"./src/**/*.{ts,tsx}",
 	],
-	prefix: "",
+
 	theme: {
 		container: {
 			center: true,
@@ -27,6 +28,7 @@ export default {
 				ring: 'hsl(var(--ring))',
 				background: 'hsl(var(--background))',
 				foreground: 'hsl(var(--foreground))',
+
 				primary: {
 					DEFAULT: 'hsl(var(--primary))',
 					foreground: 'hsl(var(--primary-foreground))'
@@ -65,21 +67,40 @@ export default {
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
 				},
-				/* Data Club Color Extensions */
-				'club-teal': 'hsl(var(--club-teal))',
-				'club-teal-dark': 'hsl(var(--club-teal-dark))',
-				'club-teal-light': 'hsl(var(--club-teal-light))',
-				'club-orange': 'hsl(var(--club-orange))',
-				'club-green': 'hsl(var(--club-green))',
-				'club-orange-light': 'hsl(var(--club-orange-light))',
-				'club-cream': 'hsl(var(--club-cream))',
-				'club-gray': 'hsl(var(--club-gray))'
-			},
+				 brand: {
+          teal: "hsl(var(--club-teal))",
+          "teal-dark": "hsl(var(--club-teal-dark))",
+          "teal-light": "hsl(var(--club-teal-light))",
+          orange: "hsl(var(--club-orange))",
+          "orange-light": "hsl(var(--club-orange-light))",
+          green: "hsl(var(--club-green))",
+          cream: "hsl(var(--club-cream))",
+          gray: "hsl(var(--club-gray))",
+        },
+      },
+			
 			borderRadius: {
 				lg: 'var(--radius)',
 				md: 'calc(var(--radius) - 2px)',
 				sm: 'calc(var(--radius) - 4px)'
 			},
+			transitionDuration: {
+        DEFAULT: "200ms",
+      },
+
+    
+      boxShadow: {
+        sm: "0 1px 2px 0 rgb(0 0 0 / 0.05)",
+        md: "0 4px 6px -1px rgb(0 0 0 / 0.1)",
+        lg: "0 10px 15px -3px rgb(0 0 0 / 0.1)",
+        xl: "0 20px 25px -5px rgb(0 0 0 / 0.1)",
+      },
+
+      
+      zIndex: {
+        max: "9999",
+      },
+
 			keyframes: {
 				'accordion-down': {
 					from: {
@@ -95,8 +116,18 @@ export default {
 					},
 					to: {
 						height: '0'
-					}
-				}
+					},
+"fade-in": {
+          from: { opacity: "0" },
+          to: { opacity: "1" },
+        },
+        "fade-out": {
+          from: { opacity: "1" },
+          to: { opacity: "0" },
+        },
+				},
+
+				
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
@@ -104,5 +135,19 @@ export default {
 			}
 		}
 	},
-	plugins: [require("tailwindcss-animate")],
+	plugins: [
+		require("tailwindcss-animate"),
+	 plugin(function ({ addUtilities }) {
+      addUtilities({
+        ".no-scrollbar": {
+          "-ms-overflow-style": "none",
+          "scrollbar-width": "none",
+          "&::-webkit-scrollbar": {
+            display: "none",
+          },
+        },
+      });
+    }),
+  ],
 } satisfies Config;
+
